@@ -1,6 +1,6 @@
-``` bash
 # final_project server Application
 ## Build Setup
+``` bash
 # install dependencies
 cd server
 npm install
@@ -9,6 +9,7 @@ npm install
 # Node.js version required: v8.1 or higher
 # Node.js version recommended: v8.9.0
 npm start
+```
 
 # final_project client Application
 
@@ -31,4 +32,3 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
