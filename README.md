@@ -1,8 +1,6 @@
-# final_project server Application
-
-## Build Setup
-
 ``` bash
+# final_project server Application
+## Build Setup
 # install dependencies
 cd server
 npm install
