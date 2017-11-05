@@ -1,4 +1,5 @@
 # final_project server Application
+> Node.js version required: v8.1 or higher
 ## Build Setup
 ``` bash
 # install dependencies
