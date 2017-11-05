@@ -1,10 +1,17 @@
 <template>
+  <div>
+    <b-modal ref="myModalRef" hide-footer title="Chat with Financial Advisor">
+      <b-img class="pt-1 pb-1" fluid src="http://dc-cdn.s3-ap-southeast-1.amazonaws.com/cc8e960ef8de0561f5b88bde6863d61da8c2e454-tc-img-preview.jpg" style="width: 100%"/>
+      <b-btn class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-btn>
+    </b-modal>
   <form-wizard next-button-text="Save and Continue" :start-index="0" @on-complete="onComplete()" class="form-wizard" color="#f1c40f">
     <h2 slot="title">Risk Profile Questionnaire</h2>
-    <tab-content title="Basic Information":before-change="test()">
+    <tab-content title="Basic Information":before-change="modifyDisabled()">
       <b-form>
         <b-row>
-          <b-col cols="2"></b-col>
+          <b-col cols="2">
+            <b-img class="pt-1 pb-1" fluid src="http://www.freeiconspng.com/uploads/live-chat-icon-20.png" style="height: 70px;cursor: pointer" @click="showModal()"/>
+          </b-col>
           <b-col cols="8">
             <h4 style="text-align: center">Basic Customer Information</h4>
             <b-form-group label="1. What is your age group?">
@@ -35,7 +42,9 @@
     <tab-content title="Goals and Objectives">
       <b-form>
         <b-row>
-          <b-col cols="2"></b-col>
+          <b-col cols="2">
+            <b-img class="pt-1 pb-1" fluid src="http://www.freeiconspng.com/uploads/live-chat-icon-20.png" style="height: 70px;cursor: pointer" @click="showModal()"/>
+          </b-col>
           <b-col cols="8">
             <h4 style="text-align: center">Investment Goals and Objectives</h4>
             <b-form-group label="6. What is the estimated breakdown of your liquid assets?" v-if="Q5_Result==='C'||Q5_Result==='D'">
@@ -65,7 +74,9 @@
     <tab-content title="Risk Tolerance/Investment Profile" :before-change="calculateTotalMark()">
       <b-form>
         <b-row>
-          <b-col cols="2"></b-col>
+          <b-col cols="2">
+            <b-img class="pt-1 pb-1" fluid src="http://www.freeiconspng.com/uploads/live-chat-icon-20.png" style="height: 70px;cursor: pointer" @click="showModal()"/>
+          </b-col>
           <b-col cols="8">
             <h4 style="text-align: center">Risk Tolerance/Investment Profile</h4>
             <b-form-group label="9. Have you made 5 or more investment transactions in the past 3 years in any of the following derivative products? Structured Products, Premium Deposit, Futures, Swap, Options, Warrants, Instrument with embedded derivatives " v-if="Q4_Result === 'YES'">
@@ -112,7 +123,9 @@ by banks, financial institutions, educational institutions, or professional orga
     </tab-content>
     <tab-content title="Assessment Result">
       <b-row>
-        <b-col cols="2"></b-col>
+        <b-col cols="2">
+          <b-img class="pt-1 pb-1" fluid src="http://www.freeiconspng.com/uploads/live-chat-icon-20.png" style="height: 70px;cursor: pointer" @click="showModal()"/>
+        </b-col>
         <b-col cols="8">
           <conservative-result v-if="totalMark<=8"></conservative-result>
           <medium-result v-else-if="totalMark<=13"></medium-result>
@@ -122,6 +135,7 @@ by banks, financial institutions, educational institutions, or professional orga
       </b-row>
     </tab-content>
   </form-wizard>
+  </div>
 </template>
 
 <script>
@@ -251,8 +265,21 @@ by banks, financial institutions, educational institutions, or professional orga
     methods: {
       test () {
       },
+      modifyDisabled () {
+        if (this.Q2_Result === 'C') {
+          this.Q3_Result = ''
+        } else {
+          this.Q4_Result = ''
+        }
+      },
       calculateTotalMark () {
         this.totalMark = parseInt(this.Q7_Result) + parseInt(this.Q14_Result) + parseInt(this.Q15_Result) + parseInt(this.Q16_Result) + parseInt(this.Q17_Result)
+      },
+      showModal () {
+        this.$refs.myModalRef.show()
+      },
+      hideModal () {
+        this.$refs.myModalRef.hide()
       },
       async onComplete () {
         this.Q6_Result = this.Q6_Result1 + '; ' + this.Q6_Result2 + '; ' + this.Q6_Result3
@@ -276,6 +303,7 @@ by banks, financial institutions, educational institutions, or professional orga
           Q17: this.Q17_Result.toString()
         })
         console.log(response.data)
+        window.location.reload(true)
       }
     }
   }
